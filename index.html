@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#0f172a" />
+    
+    <!-- 🎯 Primary Meta Tags for SEO -->
+    <title>TaskFlow - Daily Task Management & Productivity Tracker</title>
+    <meta name="title" content="TaskFlow - Master Your Daily Tasks & Boost Productivity" />
+    <meta name="description" content="TaskFlow is your personal productivity companion. Track daily tasks, build streaks, set goals, monitor analytics, and achieve more. Beautiful dark mode UI with calendar sync." />
+    <meta name="keywords" content="task manager, productivity app, daily checklist, goal tracker, task organizer, habit tracker, calendar sync, progress analytics" />
+    <meta name="author" content="TaskFlow Team" />
+    <meta name="language" content="English" />
+    
+    <!-- 🔍 Google & Search Optimization -->
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+    <meta name="googlebot" content="index, follow" />
+    <meta name="bingbot" content="index, follow" />
+    <link rel="canonical" href="https://taskflow.app" />
+    
+    <!-- 📱 Open Graph Tags (Social Media Sharing) -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://taskflow.app" />
+    <meta property="og:title" content="TaskFlow - Master Your Daily Tasks & Boost Productivity" />
+    <meta property="og:description" content="Track daily tasks, build habits, sync with calendar, and achieve your goals. Beautiful dark mode productivity app." />
+    <meta property="og:image" content="https://taskflow.app/og-image.png" />
+    <meta property="og:site_name" content="TaskFlow" />
+    <meta property="og:locale" content="en_US" />
+    
+    <!-- 🐦 Twitter Card Tags -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content="https://taskflow.app" />
+    <meta name="twitter:title" content="TaskFlow - Daily Task Manager & Productivity Tracker" />
+    <meta name="twitter:description" content="Master productivity with TaskFlow. Track tasks, build streaks, sync calendars & boost your daily performance." />
+    <meta name="twitter:image" content="https://taskflow.app/twitter-image.png" />
+    <meta name="twitter:creator" content="@TaskFlowApp" />
+    
+    <!-- 🌐 Additional Google Tags -->
+    <meta name="google-site-verification" content="ADD_YOUR_GOOGLE_VERIFICATION_CODE_HERE" />
+    <meta name="msvalidate.01" content="ADD_YOUR_BING_VERIFICATION_CODE_HERE" />
+    
+    <!-- 🔗 Structured Data (JSON-LD for Rich Snippets) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "TaskFlow",
+      "description": "Daily task management and productivity tracking application",
+      "url": "https://taskflow.app",
+      "applicationCategory": "ProductivityApplication",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "screenshot": "https://taskflow.app/screenshot.png",
+      "author": {
+        "@type": "Organization",
+        "name": "TaskFlow Team"
+      }
+    }
+    </script>
+    
+    <!-- PWA Meta Tags -->
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="TaskFlow" />
+    
+    <link rel="apple-touch-icon" href="/icon-192.png" />
+    <link rel="manifest" href="/manifest.json" />
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+      
+      * {
+        font-family: 'Inter', sans-serif;
+      }
+      
+      html, body, #root {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100%;
+      }
+      
+      body {
+        background: #0f172a;
+      }
+      
+      /* Haptic-style animations */
+      @keyframes scaleHaptic {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.05); }
+        100% { transform: scale(1); }
+      }
+      
+      @keyframes slideInDay {
+        from {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      
+      @keyframes taskEnter {
+        from {
+          opacity: 0;
+          transform: translateX(-20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateX(0);
+        }
+      }
+      
+      @keyframes pulseScore {
+        0%, 100% { transform: scale(1); }
+        50% { transform: scale(1.08); }
+      }
+      
+      @keyframes slideUp {
+        from {
+          opacity: 0;
+          transform: translateY(100%);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      
+      .haptic-button:active {
+        animation: scaleHaptic 0.3s ease-in-out;
+      }
+      
+      .day-switcher {
+        animation: slideInDay 0.4s ease-out;
+      }
+      
+      .task-item {
+        animation: taskEnter 0.3s ease-out;
+      }
+      
+      .weekly-score {
+        animation: pulseScore 2s ease-in-out infinite;
+      }
+      
+      .animate-slide-up {
+        animation: slideUp 0.3s ease-out;
+      }
+      
+      /* Smooth transitions */
+      button, div {
+        transition: all 0.2s ease;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>
