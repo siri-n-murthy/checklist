@@ -3,5 +3,11 @@ dist
 .DS_Store
 .env
 .env.local
+.env.*.local
 *.log
 *.pem
+.vercel
+.cache
+server/.env
+server/.env.local
+server/node_modules

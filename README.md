@@ -73,6 +73,46 @@ npm run dev
 ```
 
 Then open: **http://localhost:5173**
+
+---
+
+## 🌐 Deploy to Vercel (Recommended)
+
+Ready to go live? We've configured this app for easy Vercel deployment!
+
+### Quick Deploy (5 minutes)
+
+1. **Install Vercel CLI:**
+   ```bash
+   npm install -g vercel
+   ```
+
+2. **Deploy frontend:**
+   ```bash
+   vercel --prod
+   ```
+
+3. **Deploy backend:**
+   ```bash
+   cd server
+   vercel --prod
+   ```
+
+4. **Set environment variables** (in Vercel Dashboard):
+   - Frontend: `VITE_API_URL` = your backend URL
+   - Backend: `MONGODB_URI`, `JWT_SECRET`, `CORS_ORIGINS`
+
+5. **Done!** Your app is live.
+
+📚 **Detailed Guide:** See [VERCEL_QUICK_START.md](VERCEL_QUICK_START.md)
+
+🛠️ **Helper Tool:**
+```bash
+node deploy-helper.js secret    # Generate JWT secret
+node deploy-helper.js check     # Verify environment files
+node deploy-helper.js checklist # See deployment checklist
+```
+
 ---
 
 ## 📋 Setup Requirements
