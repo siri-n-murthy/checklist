@@ -1,0 +1,14 @@
+src/
+public/
+.git
+.gitignore
+README.md
+*.log
+.env.local
+.env.*.local
+vite.config.js
+tailwind.config.js
+postcss.config.js
+index.html
+DEPLOYMENT_STATUS.txt
+VERCEL_SETUP_GUIDE.txt
