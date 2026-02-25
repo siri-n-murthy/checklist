@@ -1,0 +1,191 @@
+╔════════════════════════════════════════════════════════════════════════════╗
+║                   ✅ VERCEL DEPLOYMENT - STATUS REPORT                       ║
+╚════════════════════════════════════════════════════════════════════════════╝
+
+CONFIGURATION COMPLETE ✅
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✅ FRONTEND DEPLOYED
+   URL: https://tasklist-psi-coral.vercel.app
+   Status: LIVE
+   Code: React + Vite
+   Environment: .env.local configured
+
+✅ GITHUB PUSHED
+   Repository: https://github.com/siri-n-murthy/checklist
+   Status: Code synchronized
+   Latest Commit: Fix: Configure for Vercel deployment with environment variables
+
+✅ ENVIRONMENT VARIABLES CONFIGURED
+   Frontend (.env.local):
+   - VITE_API_URL=http://localhost:5000
+
+   Backend (.env.local):
+   - MONGODB_URI=mongodb://localhost:27017/taskflow
+   - PORT=5000
+   - JWT_SECRET=dev_jwt_secret_key_dev
+   - NODE_ENV=development
+
+✅ CODE FIXES APPLIED
+   - ✅ Login.jsx → Uses import.meta.env.VITE_API_URL
+   - ✅ Signup.jsx → Uses import.meta.env.VITE_API_URL
+   - ✅ server.js → Dynamic CORS configuration
+   - ✅ Removed deprecated MongoDB options
+   - ✅ Updated npm scripts (removed nodemon)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+⏳ WHAT YOU NEED TO DO (5-10 MINUTES)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+STEP 1: CREATE BACKEND PROJECT ON VERCEL
+   1. Go to: https://vercel.com/dashboard
+   2. Click "Add New" → "Project"
+   3. Select repository: siri-n-murthy/checklist
+   4. PROJECT NAME: checklist-backend
+   5. ROOT DIRECTORY: server ← IMPORTANT!
+   6. Click "Deploy"
+   ⏱️ Wait 2-3 minutes for completion...
+
+STEP 2: COPY BACKEND URL
+   After deployment, copy your backend URL:
+   Example: https://checklist-backend-xyz123.vercel.app
+   (You'll need this for the next steps!)
+
+STEP 3: SET BACKEND ENVIRONMENT VARIABLES
+   On backend project page:
+   1. Click "Settings" → "Environment Variables"
+   2. Add these 4 variables:
+   
+   ┌─────────────────────────────────────────────┐
+   │ Name: MONGODB_URI                           │
+   │ Value: mongodb://localhost:27017/taskflow   │
+   └─────────────────────────────────────────────┘
+   
+   ┌─────────────────────────────────────────────┐
+   │ Name: JWT_SECRET                            │
+   │ Value: mysecret123456789                    │
+   └─────────────────────────────────────────────┘
+   
+   ┌─────────────────────────────────────────────┐
+   │ Name: CORS_ORIGINS                          │
+   │ Value: https://tasklist-psi-coral.vercel.app│
+   └─────────────────────────────────────────────┘
+   
+   ┌─────────────────────────────────────────────┐
+   │ Name: NODE_ENV                              │
+   │ Value: production                           │
+   └─────────────────────────────────────────────┘
+
+STEP 4: SET FRONTEND ENVIRONMENT VARIABLES
+   On frontend project page (tasklist):
+   1. Click "Settings" → "Environment Variables"
+   2. Add this 1 variable:
+   
+   ┌─────────────────────────────────────────────┐
+   │ Name: VITE_API_URL                          │
+   │ Value: [PASTE YOUR BACKEND URL FROM STEP 2] │
+   │ Example: https://checklist-backend-xyz.app  │
+   └─────────────────────────────────────────────┘
+
+STEP 5: REDEPLOY FRONTEND
+   1. Go to frontend project
+   2. Click "Deployments" tab
+   3. Click (...) on latest deployment
+   4. Click "Redeploy"
+   ⏱️ Wait 1-2 minutes...
+
+STEP 6: TEST
+   Visit: https://tasklist-psi-coral.vercel.app
+   Try signing up → If it works, YOU'RE DONE! ✅
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+📋 QUICK REFERENCE - COPY THESE VALUES
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+FRONTEND URL:
+https://tasklist-psi-coral.vercel.app
+
+BACKEND ENVIRONMENT VARIABLES:
+MONGODB_URI=mongodb://localhost:27017/taskflow
+JWT_SECRET=mysecret123456789
+CORS_ORIGINS=https://tasklist-psi-coral.vercel.app
+NODE_ENV=production
+
+FRONTEND ENVIRONMENT VARIABLE:
+VITE_API_URL=[your-backend-url-from-step-2]
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🎯 EXPECTED TIMELINE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Step 1 (Create project)         : 5 min
+Step 2 (Copy URL)               : 1 min
+Step 3 (Backend env vars)       : 2 min
+Step 4 (Frontend env var)       : 1 min
+Step 5 (Redeploy)               : 2 min
+Step 6 (Test)                   : 1 min
+                            ─────────
+TOTAL TIME:                      12 min
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✨ YOUR PROJECT STRUCTURE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+GitHub Repository
+https://github.com/siri-n-murthy/checklist
+    │
+    ├─→ Vercel Frontend Project
+    │   Name: tasklist
+    │   URL: https://tasklist-psi-coral.vercel.app
+    │   Root Directory: . (root)
+    │   Environment: VITE_API_URL
+    │
+    └─→ Vercel Backend Project (CREATE THIS)
+        Name: checklist-backend
+        URL: https://checklist-backend-[xxxxx].vercel.app
+        Root Directory: server
+        Environment: MONGODB_URI, JWT_SECRET, CORS_ORIGINS, NODE_ENV
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🐛 TROUBLESHOOTING
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+ERROR: "Connection error. Make sure backend is running on port 5000"
+FIX: Check that VITE_API_URL in frontend is correct
+     Make sure you set it to the actual backend URL from Vercel
+
+ERROR: "CORS error" in browser console
+FIX: Check that CORS_ORIGINS in backend matches frontend URL exactly
+     Should be: https://tasklist-psi-coral.vercel.app (no trailing slash)
+
+ERROR: "Cannot connect to MongoDB"
+FIX: This is okay for testing! Data won't persist but app will work.
+     To fix: Set up MongoDB Atlas (free at mongodb.com)
+
+ERROR: "Build failed" on Vercel
+FIX: Check build logs on Vercel dashboard
+     Usually means missing node_modules - just redeploy
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+📚 ADDITIONAL RESOURCES
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Vercel Dashboard: https://vercel.com/dashboard
+Vercel Docs: https://vercel.com/docs
+GitHub: https://github.com/siri-n-murthy/checklist
+MongoDB Atlas: https://www.mongodb.com/cloud/atlas
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✅ Status: Ready for Manual Deployment
+⏰ Date: February 25, 2026
+📍 Location: All code on GitHub, frontend on Vercel
+🎯 Next: Create backend project and set environment variables
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
