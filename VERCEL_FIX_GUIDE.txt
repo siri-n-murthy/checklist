@@ -1,0 +1,168 @@
+╔════════════════════════════════════════════════════════════════════════════╗
+║              VERCEL DEPLOYMENT FIX - BACKEND & CORS SETUP                    ║
+║                    3 Steps to Make Your App Work                             ║
+╚════════════════════════════════════════════════════════════════════════════╝
+
+YOUR CURRENT STATUS:
+✅ Frontend: https://tasklist-psi-coral.vercel.app (LIVE)
+❌ Backend: NOT DEPLOYED YET (causing "backend not running" error)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+STEP 1: DEPLOY BACKEND TO VERCEL (3-5 minutes)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✅ Go to: https://vercel.com/dashboard
+
+✅ Click "Add New" (top right) → Select "Project"
+
+✅ Search for your repository: siri-n-murthy/checklist
+   → Click "Import"
+
+✅ Fill in these settings:
+   
+   PROJECT NAME: 
+   checklist-backend
+   
+   FRAMEWORK PRESET:
+   Other
+   
+   ROOT DIRECTORY:
+   Select "server" ← IMPORTANT!
+   
+   BUILD COMMAND:
+   npm install
+   
+   OUTPUT DIRECTORY:
+   (leave empty)
+
+✅ Click "Deploy"
+
+⏳ WAIT 2-3 MINUTES for deployment to complete (you'll see ✓ Deployment Complete)
+
+✅ You'll see a new URL like:
+   https://checklist-backend-xxxx.vercel.app
+   
+   📋 COPY THIS URL - you'll need it next!
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+STEP 2: SET BACKEND ENVIRONMENT VARIABLES (2 minutes)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✅ In your backend project page (checklist-backend):
+   Click "Settings" tab (top navigation)
+
+✅ Go to "Environment Variables" (left sidebar)
+
+✅ Add THESE 4 variables ONE BY ONE:
+
+   VARIABLE 1:
+   Name: PORT
+   Value: 5000
+   → Click "Add"
+
+   VARIABLE 2:
+   Name: NODE_ENV
+   Value: production
+   → Click "Add"
+
+   VARIABLE 3:
+   Name: JWT_SECRET
+   Value: vercel_jwt_secret_key_12345
+   → Click "Add"
+
+   VARIABLE 4:
+   Name: CORS_ORIGINS
+   Value: https://tasklist-psi-coral.vercel.app
+   → Click "Add"
+
+   VARIABLE 5 (OPTIONAL - if using MongoDB):
+   Name: MONGODB_URI
+   Value: (your MongoDB connection string, if you have one)
+   → Click "Add"
+
+✅ After adding all variables, redeploy:
+   - Click "Deployments" tab
+   - Click the ⋮ (three dots) on latest deployment
+   - Click "Redeploy"
+   - Wait 1-2 minutes
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+STEP 3: UPDATE FRONTEND TO USE BACKEND URL (2 minutes)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✅ Go to frontend project: tasklist-psi-coral
+
+✅ Click "Settings" tab
+
+✅ Go to "Environment Variables"
+
+✅ Update or ADD this variable:
+   
+   Name: VITE_API_URL
+   Value: [PASTE BACKEND URL FROM STEP 1]
+   
+   Example: https://checklist-backend-xxxx.vercel.app
+   
+   → Click "Add" or "Save"
+
+✅ Redeploy frontend:
+   - Click "Deployments" tab
+   - Click ⋮ (three dots) on latest deployment
+   - Click "Redeploy"
+   - Wait 2-3 minutes
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+✅ DONE! TEST YOUR APP
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+1. Open: https://tasklist-psi-coral.vercel.app
+
+2. Try these:
+   ✓ Click "Sign Up" → Create a new account
+   ✓ Enter email and password
+   ✓ See if sign up works
+   ✓ Try logging in
+   ✓ See if dashboard appears with tasks
+
+3. IF IT STILL DOESN'T WORK:
+   - Open DevTools (Press F12)
+   - Go to "Console" tab
+   - Look for red error messages
+   - Check "Network" tab → see if API calls succeed
+   - Make sure backend URL is correct in frontend settings
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+TROUBLESHOOTING
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+❌ Still seeing "backend is not running" error?
+   FIX: 
+   1. Check that CORS_ORIGINS in backend is correct
+   2. Make sure you redeployed after adding env variables
+   3. Wait 2 minutes and refresh browser (Ctrl+Shift+R)
+
+❌ Getting CORS error in console?
+   FIX:
+   1. Go to backend project Settings
+   2. Update CORS_ORIGINS to include frontend URL
+   3. Redeploy backend
+
+❌ Getting 404 or API errors?
+   FIX:
+   1. Check backend deployment is successful (green ✓)
+   2. Check backend URL in frontend env variables
+   3. Make sure backend and frontend URLs are correct
+
+❌ Build failed on Vercel?
+   FIX:
+   1. Click on deployment with red ✗
+   2. Check build logs for error message
+   3. Common issue: Missing dependencies
+      → Run locally: npm install in server folder
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✅ All done! Your checklist app is now fully deployed on Vercel! 🎉
+
+Frontend: https://tasklist-psi-coral.vercel.app
+Backend: https://checklist-backend-xxxx.vercel.app (your URL)
