@@ -47,15 +47,14 @@ export default function CalendarView({ checklistData, onUpdateData, tasks = [] }
     const dateKey = date.toISOString().split('T')[0];
     const dayData = checklistData[dateKey] || {};
     
-    // Use tasks from Dashboard if available, otherwise use calendar-specific tasks
-    const tasksForDay = tasks && tasks.length > 0 
-      ? tasks.filter(task => dayData[task.id] !== undefined || Object.keys(dayData).length === 0)
-      : Object.entries(dayData)
-          .filter(([key, value]) => typeof value === 'object' && value.title)
-          .map(([key, value]) => ({ id: key, ...value }));
+    // Get all task IDs from Dashboard tasks for this day
+    const taskIds = tasks && tasks.length > 0 
+      ? tasks.filter(task => dayData[task.id] !== undefined).map(task => task.id)
+      : Object.keys(dayData).filter(key => typeof dayData[key] === 'boolean' || (typeof dayData[key] === 'object' && dayData[key].completed));
     
-    const total = tasksForDay.length || Object.keys(dayData).length;
-    const completed = tasksForDay.filter(task => dayData[task.id]).length || Object.values(dayData).filter(v => v === true || (typeof v === 'object' && v.completed)).length;
+    // Count completed tasks (value is true)
+    const completed = taskIds.filter(taskId => dayData[taskId] === true).length;
+    const total = taskIds.length;
     
     return total > 0 
       ? { completed, total, percentage: Math.round((completed / total) * 100), dateKey } 
