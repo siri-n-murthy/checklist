@@ -1,0 +1,250 @@
+╔════════════════════════════════════════════════════════════════════════════╗
+║              RENDER PLATFORM DEPLOYMENT - COMPLETE GUIDE                     ║
+║                    For Checklist Application                                 ║
+╚════════════════════════════════════════════════════════════════════════════╝
+
+⏱️ TOTAL TIME NEEDED: 15-20 MINUTES
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+PART 1: SETUP MONGODB ATLAS (DATABASE) - 3 MINUTES
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✅ STEP 1: Create MongoDB Atlas Account
+   1. Go to: https://www.mongodb.com/cloud/atlas/register
+   2. Sign up with email or Google
+   3. Create a new project (name: "Checklist")
+   4. Click "Build a Database"
+   5. Choose FREE tier (M0 Sandbox)
+   6. Select region closest to you
+   7. Click "Create Cluster" (wait 1-2 minutes)
+
+✅ STEP 2: Setup MongoDB Connection
+   1. In Atlas Dashboard, click "CONNECT"
+   2. Choose "Drivers" connection method
+   3. Select Node.js driver
+   4. Copy the connection string, it looks like:
+      mongodb+srv://username:password@cluster.mongodb.net/database
+   
+   ⚠️ IMPORTANT: When creating username/password:
+      - Username: checklist_admin (or your choice)
+      - Password: Generate strong password (save it!)
+      - Add IP: Allow access from anywhere (0.0.0.0/0)
+
+✅ STEP 3: Create Database and Collection
+   1. In Atlas, go to "Databases" → "Browse Collections"
+   2. Click "Create Database"
+      - Database: taskflow
+      - Collection: tasks
+   3. Done! You now have MONGODB_URI ready
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+PART 2: DEPLOY BACKEND ON RENDER - 5 MINUTES
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✅ STEP 1: Prepare GitHub
+   1. Make sure your code is pushed to GitHub:
+      https://github.com/siri-n-murthy/checklist
+
+✅ STEP 2: Create Render Account
+   1. Go to: https://render.com
+   2. Click "Get Started"
+   3. Sign in with GitHub (choose GitHub authentication for easiest setup)
+
+✅ STEP 3: Deploy Backend
+   1. In Render Dashboard, click "New +" → "Web Service"
+   2. Connect GitHub repo: siri-n-murthy/checklist
+   3. Fill in these settings:
+      
+      ┌──────────────────────────────────────────────────────┐
+      │ Name:                 checklist-backend              │
+      │ Root Directory:       server                         │
+      │ Environment:          Node                           │
+      │ Region:               Ohio (or nearest)              │
+      │ Branch:               main                           │
+      │ Build Command:        npm install                    │
+      │ Start Command:        npm start                      │
+      │ Instance Type:        Free (for testing)             │
+      └──────────────────────────────────────────────────────┘
+
+✅ STEP 4: Add Environment Variables
+   1. In Render deployment page, go to "Environment"
+   2. Add these variables:
+      
+      PORT=5000
+      MONGODB_URI=mongodb+srv://checklist_admin:[PASSWORD]@[CLUSTER].mongodb.net/taskflow
+      JWT_SECRET=render_jwt_secret_key_secure_123456
+      NODE_ENV=production
+      CORS_ORIGINS=http://localhost:5173,http://localhost:3000
+
+   NOTE: Replace [PASSWORD] and [CLUSTER] with your MongoDB Atlas details!
+
+✅ STEP 5: Deploy
+   1. Click "Create Web Service"
+   2. Wait 2-3 minutes for deployment
+   3. You'll see: "Your service is live!"
+   4. Copy the URL (looks like: https://checklist-backend-xxxx.onrender.com)
+   5. This is your BACKEND_URL - save it!
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+PART 3: DEPLOY FRONTEND ON RENDER - 5 MINUTES
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✅ STEP 1: Create Frontend Service
+   1. In Render Dashboard, click "New +" → "Static Site"
+   2. Connect your GitHub repo: siri-n-murthy/checklist
+   3. Fill in these settings:
+      
+      ┌──────────────────────────────────────────────────────┐
+      │ Name:                 checklist-frontend             │
+      │ Root Directory:       (leave empty)                  │
+      │ Build Command:        npm run build                  │
+      │ Publish Directory:    dist                           │
+      └──────────────────────────────────────────────────────┘
+
+✅ STEP 2: Create .env.production file (UPDATE BEFORE DEPLOYING)
+   ⚠️ CRITICAL: Update this with your backend URL from Part 2, Step 5!
+   
+   In your "checklist" folder, create file: .env.production
+   
+   Content:
+   ──────────────────────────────────────────────────────────
+   VITE_API_URL=https://checklist-backend-xxxx.onrender.com
+   ──────────────────────────────────────────────────────────
+   
+   Replace: checklist-backend-xxxx.onrender.com with your actual backend URL!
+
+✅ STEP 3: Update vite.config.js
+   Make sure your vite.config.js reads environment variables properly:
+   
+   ```javascript
+   export default {
+     server: {
+       proxy: {
+         '/api': {
+           target: process.env.VITE_API_URL || 'http://localhost:5000',
+           changeOrigin: true
+         }
+       }
+     }
+   }
+   ```
+
+✅ STEP 4: Deploy Frontend
+   1. Click "Create Static Site"
+   2. Wait 2-3 minutes for build and deployment
+   3. You'll see a URL like: https://checklist-frontend-xxxx.onrender.com
+   4. This is your PUBLIC SITE URL!
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+PART 4: UPDATE ENVIRONMENT VARIABLES - 2 MINUTES
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✅ Update Backend CORS_ORIGINS
+   1. Go to Render Dashboard → checklist-backend service
+   2. Click "Environment"
+   3. Update CORS_ORIGINS to include your frontend URL:
+      
+      CORS_ORIGINS=https://checklist-frontend-xxxx.onrender.com,http://localhost:5173,http://localhost:3000
+      
+      Replace checklist-frontend-xxxx.onrender.com with your actual frontend URL!
+
+   4. Click "Save" → service will redeploy automatically
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+TESTING YOUR DEPLOYMENT
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✅ Test Backend Health
+   1. Go to: https://your-backend-url/api/health
+   2. You should see: { "status": "Server is running" }
+
+✅ Test Frontend
+   1. Go to: https://your-frontend-url
+   2. Try signing up with a test account
+   3. Try logging in
+   4. Check if dashboard loads with tasks
+
+✅ If Login Fails
+   - Open browser DevTools (F12)
+   - Check Console tab for errors
+   - Check Network tab for API calls
+   - Make sure CORS_ORIGINS is updated correctly
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+IMPORTANT NOTES
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+⚠️ FREE TIER LIMITATIONS (Render)
+   - Backend spins down after 15 min of inactivity
+   - First request after idle takes 30+ seconds
+   - Limited to 400 build minutes/month
+   - For production, upgrade to Starter Plan ($7/month)
+
+⚠️ AUTOMATIC DEPLOYMENTS
+   - Every GitHub push automatically redeploys your services
+   - Check deployment status in Render Dashboard
+   - Deployments take 2-3 minutes
+
+⚠️ MONGODB ATLAS FREE TIER
+   - Limited to 512MB
+   - Auto-pauses after 60 days of inactivity
+   - No backup
+   - For production, consider upgrading
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ROLLBACK / CHANGES
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+To make changes:
+1. Edit code locally
+2. Commit and push to GitHub: git push origin main
+3. Render automatically redeploys
+4. Check deployment status in Render Dashboard (2-3 min)
+
+To roll back:
+1. In Render Dashboard → Service → Deployments
+2. Click the green checkmark on a previous deployment
+3. Click "Redeploy"
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+TROUBLESHOOTING
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+❌ CORS Error in Console
+   Fix: Update CORS_ORIGINS in backend environment variables
+
+❌ MongoDB Connection Error
+   Fix: Check MongoDB Atlas:
+   - IP whitelist includes 0.0.0.0/0
+   - Username/password is correct
+   - Connection string is correct in MONGODB_URI
+
+❌ Build Fails on Render
+   Fix:
+   1. Click "Logs" in Render Dashboard
+   2. Look for error messages
+   3. Check if all dependencies are installed
+   4. Ensure npm install completes successfully
+
+❌ 502 Bad Gateway Error
+   Fix:
+   - Backend may be spinning up (Free tier)
+   - Wait 30+ seconds and refresh
+   - Check backend service is running in Render Dashboard
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✅ DEPLOYMENT COMPLETE!
+
+Your checklist app is now live on Render!
+- Frontend: https://checklist-frontend-xxxx.onrender.com
+- Backend: https://checklist-backend-xxxx.onrender.com
+- Database: MongoDB Atlas
+
+Next Steps:
+1. Share the frontend URL with friends/family
+2. Monitor performance in Render Dashboard
+3. Consider upgrading to paid plans for better performance
+4. Set up custom domain (optional, in Render settings)
+
+Good luck! 🚀
